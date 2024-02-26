@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
- 
+
 int main() {
   // 自分の解答
   cout << 0.5 * 100 * (100 + 1) << endl;
