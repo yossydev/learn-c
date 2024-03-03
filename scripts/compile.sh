@@ -6,16 +6,14 @@ OUT_DIR=./bin
 # 出力ディレクトリが存在しない場合は作成
 [ ! -d "$OUT_DIR" ] && mkdir -p "$OUT_DIR"
 
-# srcディレクトリとそのサブディレクトリ内の全ての.cppファイルに対して検索し、それぞれコンパイルする
-find src -type f -name "*.cpp" | while read file; do
-    # ファイルのパスから基本名を取得（ディレクトリ部分を削除）
-    filename=$(basename "$file" .cpp)
-    # サブディレクトリを含めたパスから、すべてのスラッシュをアンダースコアに置換して、
-    # 一意の出力ファイル名を生成する
-    unique_name=$(echo "$file" | sed 's/src\/\?\|\.cpp//g' | sed 's/\//_/g')
-    # コンパイルコマンド
-    g++-13 -std=c++20 "$file" -o "$OUT_DIR/$unique_name"
-done
+# コンパイルされた実行ファイルの名前
+EXEC_NAME=my_program
+
+# srcディレクトリとそのサブディレクトリ内の全ての.cppファイルを検索し、
+# それらを一つの実行可能ファイルにコンパイルするためのファイルリストを作成する
+FILES=$(find src -type f -name "*.cpp")
+
+# コンパイルコマンド
+g++-13 -std=c++20 $FILES -o "$OUT_DIR/$EXEC_NAME"
 
 echo "コンパイルが完了しました。"
-
